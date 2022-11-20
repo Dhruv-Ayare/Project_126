@@ -5,6 +5,7 @@ leftwristX=0;
 leftwristY=0;
 
 scoreLeftWrist=0;
+scorerightWrist=0;
 
 song1_status="";
 song2_status="";
@@ -40,6 +41,14 @@ function draw(){
             document.getElementById("song").innerHTML="Playing Harry Potter Theme song";
         }
     }
+    if(scorerightWrist>0.2){
+        circle(rightwristX,rightwristY,20);
+        song1.stop();
+        if(song2_status==false){
+            song2.play();
+            document.getElementById("song").innerHTML="Playing Peter Pan song";
+        }
+    }
 }
 function modelLoaded(){
     console.log("PoseNet is initialized");
@@ -54,6 +63,8 @@ function gotPoses(results){
         leftwristX=results[0].pose.leftWrist.x;
         leftwristY=results[0].pose.leftWrist.y;
         console.log("Left Wrist X = "+leftwristX+", Left Wrist Y = "+leftwristY);
+        scorerightWrist=results[0].pose.keypoints[10].score;
+        console.log("Score Right Wrist = "+scorerightWrist);
 
         rightwristX=results[0].pose.rightWrist.x;
         rightwristY=results[0].pose.rightWrist.y;
